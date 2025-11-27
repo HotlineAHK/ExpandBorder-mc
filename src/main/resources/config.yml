@@ -1,0 +1,48 @@
+# Конфигурация ExpanderBarrier плагина
+# Настройки для русскоязычных команд
+enable-russian-commands: true
+
+# Максимальное расширение за одну команду
+max-expand-size: 16
+
+# Цена за расширение (алмазы на 1 блок)
+diamond-cost-per-block: 2
+
+# Настройки оповещений
+enable-server-announce: true
+announce-format: "§c! §f[§6%level%§f] §f%player% §eрасширил барьер на %size% блоков."
+
+# Настройки звука
+enable-sound: true
+sound-type: "BLOCK_NOTE_BLOCK_HARP"
+sound-volume: 1.0
+sound-pitch: 1.0
+
+# Настройки таблицы лидеров
+leaderboard-size: 10
+
+# Настройки достижений
+achievements:
+  beginner: 10
+  enthusiast: 25
+  master: 50
+  conqueror: 100
+  god: 1000
+
+# Настройки кулдауна (в секундах)
+cooldown-seconds: 5
+
+# Сообщения
+messages:
+  need-diamonds: "§cУ вас недостаточно алмазов (нужно %cost%)."
+  expanded-success: "§aГраница мира расширена на %size% блоков за %cost% алмазов."
+  invalid-argument: "§cНеверный аргумент. Используйте: /expbor [размер] или /expbor"
+  no-permission: "§cУ вас нет разрешения на это действие."
+  size-too-large: "§cМаксимальное расширение за раз: %max% блоков."
+  cooldown-message: "§cПодождите %seconds% секунд перед повторным использованием."
+  leaderboard-header: "§6§lТаблица лидеров по расширению барьера:"
+  leaderboard-format: "§e%rank%. §f%player% §7- §6%total% блоков"
+  no-achievements-yet: "§7У вас пока нет достижений."
+  achievement-unlocked: "§6Поздравляем! §fВы получили достижение: §e%achievement%§f!"
+  achievements-list-header: "§6§lВаши достижения:"
+  achievement-format: "§f%achievement% §7- §e%progress%/%required% блоков"

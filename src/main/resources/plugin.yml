@@ -1,13 +1,45 @@
-name: WorldBorderExpander
+name: ExpanderBarrier
 version: 1.0
 main: me.yourname.worldborderexpander.WorldBorderExpander
 api-version: 1.20
 commands:
-  expandborder:
-    description: Расширить границу мира на 1 блок за 2 алмаза
-    usage: /expandborder
-    permission: worldborderexpander.expand
+  expbor:
+    description: Расширить границу мира
+    usage: /expbor [размер]
+    aliases: [eb, расширить, барьер]
+    permission: expbor.expand
+  expborleaderboard:
+    description: Показать таблицу лидеров по расширению барьера
+    usage: /expbor leaderboard
+    aliases: [ebtop, топ]
+    permission: expbor.command.leaderboard
+  expborachievements:
+    description: Показать достижения по расширению барьера
+    usage: /expbor achievements
+    aliases: [ebach, достижения]
+    permission: expbor.command.achievements
 permissions:
-  worldborderexpander.expand:
+  expbor.expand:
     description: Позволяет расширять границу мира
+    default: true
+  expbor.expand.1:
+    description: Позволяет расширять на 1 блок
+    default: true
+  expbor.expand.2:
+    description: Позволяет расширять на 2 блока
+    default: op
+  expbor.expand.4:
+    description: Позволяет расширять на 4 блока
+    default: op
+  expbor.expand.8:
+    description: Позволяет расширять на 8 блоков
+    default: op
+  expbor.expand.16:
+    description: Позволяет расширять на 16 блоков
+    default: op
+  expbor.command.leaderboard:
+    description: Позволяет использовать команду таблицы лидеров
+    default: true
+  expbor.command.achievements:
+    description: Позволяет использовать команду достижений
     default: true
