@@ -5,19 +5,9 @@ api-version: 1.20
 commands:
   expbor:
     description: Расширить границу мира
-    usage: /expbor [размер]
-    aliases: [eb, расширить, барьер]
+    usage: /expbor [размер|leaderboard|achievements|top]
+    aliases: [eb, expandborder, расбор, расширитьбарьер, рб]
     permission: expbor.expand
-  expborleaderboard:
-    description: Показать таблицу лидеров по расширению барьера
-    usage: /expbor leaderboard
-    aliases: [ebtop, топ]
-    permission: expbor.command.leaderboard
-  expborachievements:
-    description: Показать достижения по расширению барьера
-    usage: /expbor achievements
-    aliases: [ebach, достижения]
-    permission: expbor.command.achievements
 permissions:
   expbor.expand:
     description: Позволяет расширять границу мира

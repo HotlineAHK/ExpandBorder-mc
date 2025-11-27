@@ -12,8 +12,8 @@ diamond-cost-per-block: 2
 enable-server-announce: true
 announce-format: "§c! §f[§6%level%§f] §f%player% §eрасширил барьер на %size% блоков."
 
-# Настройки звука
-enable-sound: true
+# Настройки звука - отключаем по умолчанию (требование 4)
+enable-sound: false
 sound-type: "block.note_block.harp"
 sound-volume: 1.0
 sound-pitch: 1.0
@@ -36,7 +36,7 @@ cooldown-seconds: 5
 messages:
   need-diamonds: "§cУ вас недостаточно алмазов (нужно %cost%)."
   expanded-success: "§aГраница мира расширена на %size% блоков за %cost% алмазов."
-  invalid-argument: "§cНеверный аргумент. Используйте: /expbor [размер] или /expbor"
+  invalid-argument: "§cНеверный аргумент. Используйте: /eb [размер] или /eb"
   no-permission: "§cУ вас нет разрешения на это действие."
   size-too-large: "§cМаксимальное расширение за раз: %max% блоков."
   cooldown-message: "§cПодождите %seconds% секунд перед повторным использованием."
@@ -46,3 +46,5 @@ messages:
   achievement-unlocked: "§6Поздравляем! §fВы получили достижение: §e%achievement%§f!"
   achievements-list-header: "§6§lВаши достижения:"
   achievement-format: "§f%achievement% §7- §e%progress%/%required% блоков"
+  hidden-achievement-format: "§d%achievement% §7- §e%progress%/%required% блоков"
+  hidden-achievement-unlocked: "§6[§eСистема§6] §fВы получили скрытое достижение: §d\"%achievement%\"!"

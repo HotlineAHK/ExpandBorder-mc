@@ -1,21 +1,29 @@
-# ExpanderBarrier (Expbor) Plugin
+# ExpanderBarrier (Expbor) Plugin - Улучшенная версия
 
-Advanced World Border Expander plugin with multiple features for Minecraft servers.
+Advanced World Border Expander plugin with multiple features for Minecraft servers. Includes hidden achievement, unified command structure, and persistent player data.
 
 ## Features
 
-### 1. Command Aliases
-- `/expbor` - Main command
-- `/eb` - Short alias
-- `/расширить` - Russian command
-- `/барьер` - Russian command
+### 1. Unified Command Structure
+- `/eb` - Main command (unified for all functions)
+- `/expbor` - Alternative main command
+- `/expandborder` - Full English command
+- `/расбор` - Short Russian command
+- `/расширитьбарьер` - Full Russian command
+- `/рб` - Short Russian alias
 
-### 2. Expand with Size Parameter
-- `/expbor` - Expands by 1 block (default)
-- `/expbor 8` - Expands by 8 blocks
+### 2. Command Arguments System
+- `/eb` - Expands by 1 block (default)
 - `/eb 16` - Expands by 16 blocks
+- `/eb leaderboard` or `/eb top` - Shows leaderboard
+- `/eb achievements` - Shows player achievements
 
-### 3. Permissions System
+### 3. Hidden Achievement
+- "Тень барьера" - Secret achievement for 5000 total expansion blocks
+- Appears in achievements list only after earning it
+- Special message: "§6[§eСистема§6] §fВы получили скрытое достижение: §d"Тень барьера"!"
+
+### 4. Permissions System
 - `expbor.expand` - Basic permission to use the command
 - `expbor.expand.1` - Permission to expand by 1 block
 - `expbor.expand.2` - Permission to expand by 2 blocks
@@ -25,38 +33,37 @@ Advanced World Border Expander plugin with multiple features for Minecraft serve
 - `expbor.command.leaderboard` - Permission to use leaderboard command
 - `expbor.command.achievements` - Permission to use achievements command
 
-### 4. Leaderboard System
-- `/expbor leaderboard` or `/ebtop` or `/топ` - Shows top 10 players by expansion
-- Shows total blocks expanded by each player
+### 5. Data Persistence
+- Player expansion data saved in YAML files (players/uuid.yml)
+- Achievement data preserved between server restarts
+- Total expansion blocks tracked per player
 
-### 5. Achievements System
-- `/expbor achievements` or `/ebach` or `/достижения` - Shows player achievements
-- Achievements:
-  - "Начинающий расширяльщик" - 10 blocks expanded
-  - "Любитель барьеров" - 25 blocks expanded
-  - "Мастер границ" - 50 blocks expanded
-  - "Покоритель мира" - 100 blocks expanded
-  - "Бог расширения" - 1000 blocks expanded
+### 6. Achievements System
+- "Начинающий расширяльщик" - 10 blocks expanded
+- "Любитель барьеров" - 25 blocks expanded
+- "Мастер границ" - 50 blocks expanded
+- "Покоритель мира" - 100 blocks expanded
+- "Бог расширения" - 1000 blocks expanded
+- "Тень барьера" - 5000 total blocks expanded (hidden achievement)
 
-### 6. Configuration
+### 7. Configuration
 - Configurable diamond cost per block
 - Configurable max expand size
 - Configurable cooldown
 - Configurable achievement requirements
 - Configurable messages
-- Sound settings
+- Sound settings (disabled by default)
 
-### 7. Server Announcements
+### 8. Server Announcements
 - Broadcasts when a player expands the border
 - Customizable announcement format
 
-### 8. Cooldown System
+### 9. Cooldown System
 - Configurable cooldown between uses
 - Prevents spamming the command
 
-### 9. Sound Effects
-- Plays sound when expanding successfully
-- Plays special sound when achieving an achievement
+### 10. Sound Effects
+- Sound effects disabled by default (requirement implemented)
 - Configurable sound type, volume, and pitch
 
 ## Configuration
@@ -64,6 +71,7 @@ Advanced World Border Expander plugin with multiple features for Minecraft serve
 The plugin includes a `config.yml` file with the following settings:
 
 ```yaml
+# Конфигурация ExpanderBarrier плагина
 # Настройки для русскоязычных команд
 enable-russian-commands: true
 
@@ -77,8 +85,8 @@ diamond-cost-per-block: 2
 enable-server-announce: true
 announce-format: "§c! §f[§6%level%§f] §f%player% §eрасширил барьер на %size% блоков."
 
-# Настройки звука
-enable-sound: true
+# Настройки звука - отключаем по умолчанию (требование 4)
+enable-sound: false
 sound-type: "block.note_block.harp"
 sound-volume: 1.0
 sound-pitch: 1.0
@@ -101,7 +109,7 @@ cooldown-seconds: 5
 messages:
   need-diamonds: "§cУ вас недостаточно алмазов (нужно %cost%)."
   expanded-success: "§aГраница мира расширена на %size% блоков за %cost% алмазов."
-  invalid-argument: "§cНеверный аргумент. Используйте: /expbor [размер] или /expbor"
+  invalid-argument: "§cНеверный аргумент. Используйте: /eb [размер] или /eb"
   no-permission: "§cУ вас нет разрешения на это действие."
   size-too-large: "§cМаксимальное расширение за раз: %max% блоков."
   cooldown-message: "§cПодождите %seconds% секунд перед повторным использованием."
@@ -111,15 +119,17 @@ messages:
   achievement-unlocked: "§6Поздравляем! §fВы получили достижение: §e%achievement%§f!"
   achievements-list-header: "§6§lВаши достижения:"
   achievement-format: "§f%achievement% §7- §e%progress%/%required% блоков"
+  hidden-achievement-format: "§d%achievement% §7- §e%progress%/%required% блоков"
+  hidden-achievement-unlocked: "§6[§eСистема§6] §fВы получили скрытое достижение: §d\"%achievement%\"!"
 ```
 
 ## How to Use
 
 1. Place the JAR file in your server's `plugins` folder
 2. Restart or reload your server
-3. The plugin will generate a `config.yml` file with default settings
+3. The plugin will generate a `config.yml` file with default settings and a `players/` directory
 4. Configure the settings to your liking
-5. Players can now use the `/expbor` command to expand the world border
+5. Players can now use the unified `/eb` command for all functions
 
 ## Compilation
 
@@ -137,13 +147,8 @@ To compile the plugin from source:
 
 ## Commands Summary
 
-- `/expbor [размер]` - Expand the world border by specified number of blocks (default 1)
-- `/eb [размер]` - Short alias for expbor
-- `/расширить [размер]` - Russian command for expand
-- `/барьер [размер]` - Russian command for barrier
-- `/expbor leaderboard` - Show leaderboard
-- `/ebtop` - Short alias for leaderboard
-- `/топ` - Russian command for leaderboard
-- `/expbor achievements` - Show achievements
-- `/ebach` - Short alias for achievements
-- `/достижения` - Russian command for achievements
+- `/eb` - Expand the world border by 1 block (default)
+- `/eb 16` - Expand the world border by 16 blocks
+- `/eb leaderboard` or `/eb top` - Show leaderboard
+- `/eb achievements` - Show achievements
+- Aliases: `/expbor`, `/expandborder`, `/расбор`, `/расширитьбарьер`, `/рб`
