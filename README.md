@@ -79,7 +79,7 @@ announce-format: "§c! §f[§6%level%§f] §f%player% §eрасширил бар
 
 # Настройки звука
 enable-sound: true
-sound-type: "BLOCK_NOTE_BLOCK_HARP"
+sound-type: "block.note_block.harp"
 sound-volume: 1.0
 sound-pitch: 1.0
 
@@ -112,6 +112,28 @@ messages:
   achievements-list-header: "§6§lВаши достижения:"
   achievement-format: "§f%achievement% §7- §e%progress%/%required% блоков"
 ```
+
+## How to Use
+
+1. Place the JAR file in your server's `plugins` folder
+2. Restart or reload your server
+3. The plugin will generate a `config.yml` file with default settings
+4. Configure the settings to your liking
+5. Players can now use the `/expbor` command to expand the world border
+
+## Compilation
+
+To compile the plugin from source:
+
+1. Make sure you have Java JDK 8 or higher installed
+2. Make sure you have Maven installed
+3. Navigate to the project directory in your terminal
+4. Run the following command to compile the plugin:
+   ```
+   mvn clean package
+   ```
+5. The compiled JAR file will be located in the `target/` directory as `ExpanderBarrier-1.0.jar`
+6. Place the JAR file in your Minecraft server's `plugins` folder
 
 ## Commands Summary
 

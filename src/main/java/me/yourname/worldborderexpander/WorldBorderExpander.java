@@ -148,7 +148,7 @@ public class WorldBorderExpander extends JavaPlugin {
                 
                 // Проигрываем звук
                 if (config.getBoolean("enable-sound", true)) {
-                    String soundType = config.getString("sound-type", "BLOCK_NOTE_BLOCK_HARP");
+                    String soundType = config.getString("sound-type", "block.note_block.harp");
                     float volume = (float) config.getDouble("sound-volume", 1.0);
                     float pitch = (float) config.getDouble("sound-pitch", 1.0);
                     player.playSound(player.getLocation(), soundType, volume, pitch);
@@ -285,7 +285,7 @@ public class WorldBorderExpander extends JavaPlugin {
                 
                 // Проигрываем звук при получении достижения
                 if (config.getBoolean("enable-sound", true)) {
-                    String soundType = config.getString("sound-type", "BLOCK_NOTE_BLOCK_HARP");
+                    String soundType = config.getString("sound-type", "block.note_block.harp");
                     float volume = (float) config.getDouble("sound-volume", 1.0);
                     float pitch = (float) config.getDouble("sound-pitch", 1.5); // Высокий тон для достижений
                     player.playSound(player.getLocation(), soundType, volume, pitch);
