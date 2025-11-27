@@ -1,0 +1,13 @@
+name: WorldBorderExpander
+version: 1.0
+main: me.yourname.worldborderexpander.WorldBorderExpander
+api-version: 1.20
+commands:
+  expandborder:
+    description: Расширить границу мира на 1 блок за 2 алмаза
+    usage: /expandborder
+    permission: worldborderexpander.expand
+permissions:
+  worldborderexpander.expand:
+    description: Позволяет расширять границу мира
+    default: true
