@@ -14,7 +14,7 @@ announce-format: "§c! §f[§6%level%§f] §f%player% §eрасширил бар
 
 # Настройки звука
 enable-sound: true
-sound-type: "BLOCK_NOTE_BLOCK_HARP"
+sound-type: "block.note_block.harp"
 sound-volume: 1.0
 sound-pitch: 1.0
 
