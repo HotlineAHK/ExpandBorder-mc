@@ -1,0 +1,35 @@
+name: ExpanderBarrier
+version: 1.0
+main: me.yourname.worldborderexpander.WorldBorderExpander
+api-version: 1.20
+commands:
+  expbor:
+    description: Расширить границу мира
+    usage: /expbor [размер|leaderboard|achievements|top|help|status]
+    aliases: [eb, expandborder, расбор, расширитьбарьер, рб]
+    permission: expbor.expand
+permissions:
+  expbor.expand:
+    description: Позволяет расширять границу мира
+    default: true
+  expbor.expand.1:
+    description: Позволяет расширять на 1 блок
+    default: true
+  expbor.expand.2:
+    description: Позволяет расширять на 2 блока
+    default: op
+  expbor.expand.4:
+    description: Позволяет расширять на 4 блока
+    default: op
+  expbor.expand.8:
+    description: Позволяет расширять на 8 блоков
+    default: op
+  expbor.expand.16:
+    description: Позволяет расширять на 16 блоков
+    default: op
+  expbor.command.leaderboard:
+    description: Позволяет использовать команду таблицы лидеров
+    default: true
+  expbor.command.achievements:
+    description: Позволяет использовать команду достижений
+    default: true
