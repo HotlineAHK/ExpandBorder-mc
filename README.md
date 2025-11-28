@@ -1,6 +1,6 @@
 # ExpanderBarrier (Expbor) Plugin - Улучшенная версия
 
-Advanced World Border Expander plugin with multiple features for Minecraft servers. Includes hidden achievement, unified command structure, and persistent player data.
+Advanced World Border Expander plugin with multiple features for Minecraft servers. Includes hidden achievement, unified command structure, persistent player data, and enhanced user experience.
 
 ## Features
 
@@ -17,13 +17,22 @@ Advanced World Border Expander plugin with multiple features for Minecraft serve
 - `/eb 16` - Expands by 16 blocks
 - `/eb leaderboard` or `/eb top` - Shows leaderboard
 - `/eb achievements` - Shows player achievements
+- `/eb help` - Shows help information
+- `/eb status` - Shows current world border status
 
-### 3. Hidden Achievement
+### 3. Enhanced User Experience Features
+- **Help Command**: Detailed help information with all available commands
+- **Status Command**: Shows current world border size, center coordinates, and expansion information
+- **Improved Feedback**: Shows current border size after expansion
+- **Better Error Messages**: Shows exact diamond count needed vs. available
+- **Intuitive Commands**: Russian language support for all commands
+
+### 4. Hidden Achievement
 - "Тень барьера" - Secret achievement for 5000 total expansion blocks
 - Appears in achievements list only after earning it
-- Special message: "§6[§eСистема§6] §fВы получили скрытое достижение: §d"Тень барьера"!"
+- Special message: "§6[§eСистема§6] §fВы получили скрытое достижение: §d\"Тень барьера\"!"
 
-### 4. Permissions System
+### 5. Permissions System
 - `expbor.expand` - Basic permission to use the command
 - `expbor.expand.1` - Permission to expand by 1 block
 - `expbor.expand.2` - Permission to expand by 2 blocks
@@ -32,13 +41,15 @@ Advanced World Border Expander plugin with multiple features for Minecraft serve
 - `expbor.expand.16` - Permission to expand by 16 blocks
 - `expbor.command.leaderboard` - Permission to use leaderboard command
 - `expbor.command.achievements` - Permission to use achievements command
+- `expbor.command.help` - Permission to use help command
+- `expbor.command.status` - Permission to use status command
 
-### 5. Data Persistence
+### 6. Data Persistence
 - Player expansion data saved in YAML files (players/uuid.yml)
 - Achievement data preserved between server restarts
 - Total expansion blocks tracked per player
 
-### 6. Achievements System
+### 7. Achievements System
 - "Начинающий расширяльщик" - 10 blocks expanded
 - "Любитель барьеров" - 25 blocks expanded
 - "Мастер границ" - 50 blocks expanded
@@ -46,7 +57,7 @@ Advanced World Border Expander plugin with multiple features for Minecraft serve
 - "Бог расширения" - 1000 blocks expanded
 - "Тень барьера" - 5000 total blocks expanded (hidden achievement)
 
-### 7. Configuration
+### 8. Configuration
 - Configurable diamond cost per block
 - Configurable max expand size
 - Configurable cooldown
@@ -54,15 +65,15 @@ Advanced World Border Expander plugin with multiple features for Minecraft serve
 - Configurable messages
 - Sound settings (disabled by default)
 
-### 8. Server Announcements
+### 9. Server Announcements
 - Broadcasts when a player expands the border
 - Customizable announcement format
 
-### 9. Cooldown System
+### 10. Cooldown System
 - Configurable cooldown between uses
 - Prevents spamming the command
 
-### 10. Sound Effects
+### 11. Sound Effects
 - Sound effects disabled by default (requirement implemented)
 - Configurable sound type, volume, and pitch
 
@@ -107,7 +118,7 @@ cooldown-seconds: 5
 
 # Сообщения
 messages:
-  need-diamonds: "§cУ вас недостаточно алмазов (нужно %cost%)."
+  need-diamonds: "§cУ вас недостаточно алмазов (нужно %cost%, у вас %current%)."
   expanded-success: "§aГраница мира расширена на %size% блоков за %cost% алмазов."
   invalid-argument: "§cНеверный аргумент. Используйте: /eb [размер] или /eb"
   no-permission: "§cУ вас нет разрешения на это действие."
@@ -120,7 +131,20 @@ messages:
   achievements-list-header: "§6§lВаши достижения:"
   achievement-format: "§f%achievement% §7- §e%progress%/%required% блоков"
   hidden-achievement-format: "§d%achievement% §7- §e%progress%/%required% блоков"
-  hidden-achievement-unlocked: "§6[§eСистема§6] §fВы получили скрытое достижение: §d\"%achievement%\"!"
+  hidden-achievement-unlocked: "§6[§eСистема§6] §fВы получили скрытое достижение: §d\\\"%achievement%\\\"!"
+  help-header: "§6§lПомощь по командам ExpanderBarrier:"
+  help-expand: "§e/eb [размер] §7- Расширить границу мира (по умолчанию 1 блок)"
+  help-leaderboard: "§e/eb leaderboard §7- Показать таблицу лидеров"
+  help-achievements: "§e/eb achievements §7- Показать ваши достижения"
+  help-status: "§e/eb status §7- Показать текущую информацию о границе мира"
+  help-help: "§e/eb help §7- Показать это сообщение"
+  status-header: "§6§lИнформация о границе мира:"
+  status-current-size: "§eТекущий размер: §f%size%"
+  status-center-x: "§eЦентр X: §f%x%"
+  status-center-z: "§eЦентр Z: §f%z%"
+  status-current-diameter: "§eТекущий диаметр: §f%diameter%"
+  status-time-remaining: "§eВремя до завершения расширения: §f%time% сек."
+  status-no-expansion: "§7Нет активного расширения"
 ```
 
 ## How to Use
@@ -151,4 +175,6 @@ To compile the plugin from source:
 - `/eb 16` - Expand the world border by 16 blocks
 - `/eb leaderboard` or `/eb top` - Show leaderboard
 - `/eb achievements` - Show achievements
+- `/eb help` - Show help information
+- `/eb status` - Show current world border status
 - Aliases: `/expbor`, `/expandborder`, `/расбор`, `/расширитьбарьер`, `/рб`

@@ -5,7 +5,7 @@ api-version: 1.20
 commands:
   expbor:
     description: Расширить границу мира
-    usage: /expbor [размер|leaderboard|achievements|top]
+    usage: /expbor [размер|leaderboard|achievements|top|help|status]
     aliases: [eb, expandborder, расбор, расширитьбарьер, рб]
     permission: expbor.expand
 permissions:
@@ -32,4 +32,10 @@ permissions:
     default: true
   expbor.command.achievements:
     description: Позволяет использовать команду достижений
+    default: true
+  expbor.command.help:
+    description: Позволяет использовать команду помощи
+    default: true
+  expbor.command.status:
+    description: Позволяет использовать команду статуса
     default: true
