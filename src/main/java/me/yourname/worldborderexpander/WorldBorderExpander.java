@@ -412,33 +412,33 @@ public class WorldBorderExpander extends JavaPlugin {
         }
         
         Player player = (Player) sender;
-        World world = player.getWorld();
-        org.bukkit.WorldBorder worldBorder = world.getWorldBorder();
+        UUID playerId = player.getUniqueId();
         
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
             config.getString("messages.status-header", "§6§lИнформация о границе мира:")));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-            config.getString("messages.status-current-size", "§eТекущий размер: §f%size%")
-                .replace("%size%", String.format("%.2f", worldBorder.getSize()))));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-            config.getString("messages.status-center-x", "§eЦентр X: §f%x%")
-                .replace("%x%", String.format("%.2f", worldBorder.getCenter().getX()))));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-            config.getString("messages.status-center-z", "§eЦентр Z: §f%z%")
-                .replace("%z%", String.format("%.2f", worldBorder.getCenter().getZ()))));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-            config.getString("messages.status-current-diameter", "§eТекущий диаметр: §f%diameter%")
-                .replace("%diameter%", String.format("%.2f", worldBorder.getSize()))));
         
-        // Информация о кулдауне для игрока
-        if (hasCooldown((Player) sender)) {
-            int remaining = getCooldownSeconds((Player) sender);
+        // Текущий уровень игрока
+        int playerLevel = getPlayerLevel(player);
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.status-player-level", "§eУровень игрока: §f%level%")
+                .replace("%level%", String.valueOf(playerLevel))));
+        
+        // Прогресс расширения
+        int totalExpansions = playerExpansions.getOrDefault(playerId, 0);
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.status-expansion-progress", "§eПрогресс расширения: §f%total% блоков")
+                .replace("%total%", String.valueOf(totalExpansions))));
+        
+        // Полученные достижения
+        Set<String> unlockedAchievements = playerAchievements.getOrDefault(playerId, new HashSet<>());
+        if (!unlockedAchievements.isEmpty()) {
+            String achievementsList = String.join(", ", unlockedAchievements);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-                config.getString("messages.status-cooldown", "§eКулдаун: §f%seconds% сек.")
-                    .replace("%seconds%", String.valueOf(remaining))));
+                config.getString("messages.status-achievements", "§eДостижения: §f%achievements%")
+                    .replace("%achievements%", achievementsList)));
         } else {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-                config.getString("messages.status-no-cooldown", "§7Кулдаун не активен")));
+                config.getString("messages.status-no-achievements", "§eДостижения: §fПока нет")));
         }
     }
     
