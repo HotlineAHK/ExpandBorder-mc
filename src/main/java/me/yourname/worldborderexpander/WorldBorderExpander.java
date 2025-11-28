@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +28,7 @@ public class WorldBorderExpander extends JavaPlugin {
     private final Map<String, Integer> achievementRequirements = new LinkedHashMap<>();
     
     // Добавляем скрытое достижение
-    private static final String HIDDEN_ACHIEVEMENT_NAME = "Тень барьера";
+    private static final String HIDDEN_ACHIEVEMENT_NAME = "Тень расширения";
     private static final int HIDDEN_ACHIEVEMENT_THRESHOLD = 5000;
     
     @Override
@@ -467,6 +468,21 @@ public class WorldBorderExpander extends JavaPlugin {
                 message = message.replace("%achievement%", name);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                 
+                // Выдаем награды за достижения
+                if (name.equals("Покоритель мира")) {
+                    // Награда: кирка с Удачей 4
+                    ItemStack pickaxe = new ItemStack(Material.DIAMOND_PICKAXE);
+                    pickaxe.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 4); // Удача IV
+                    player.getInventory().addItem(pickaxe);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "§aВ награду за достижение выдана кирка с Удачей IV!"));
+                } else if (name.equals("Бог расширения")) {
+                    // Награда: алмазная кирка с Удачей VI
+                    ItemStack diamondPickaxe = new ItemStack(Material.DIAMOND_PICKAXE);
+                    diamondPickaxe.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, 6); // Удача VI
+                    player.getInventory().addItem(diamondPickaxe);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "§aВ награду за достижение выдана алмазная кирка с Удачей VI!"));
+                }
+                
                 // Удаляем звук при получении достижения (требование 4)
                 // Ранее здесь был код проигрывания звука, теперь он удален
             }
@@ -483,6 +499,10 @@ public class WorldBorderExpander extends JavaPlugin {
             message = message.replace("%achievement%", HIDDEN_ACHIEVEMENT_NAME);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             
+            // Выдаем награду за скрытое достижение: 16 блоков бедрока
+            ItemStack bedrockBlocks = new ItemStack(Material.BEDROCK, 16);
+            player.getInventory().addItem(bedrockBlocks);
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "§aВ награду за достижение выдано 16 блоков бедрока!"));
             // Удаляем звук при получении достижения (требование 4)
             // Ранее здесь был код проигрывания звука, теперь он удален
         }
