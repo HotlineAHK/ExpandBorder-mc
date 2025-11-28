@@ -123,10 +123,9 @@ public class WorldBorderExpander extends JavaPlugin {
         
         // Проверяем, является ли команда одной из разрешенных
         if (isExpanderCommand(cmdLabel)) {
-            // Если нет аргументов - показываем список доступных подкоманд
+            // Если нет аргументов - расширяем на 1 блок (по умолчанию)
             if (args.length == 0) {
-                showHelp(sender);
-                return true;
+                return expandBorder(sender, 1);
             }
             
             // Проверяем первый аргумент
