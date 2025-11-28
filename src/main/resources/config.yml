@@ -36,7 +36,7 @@ cooldown-seconds: 5
 messages:
   need-diamonds: "§cУ вас недостаточно алмазов (нужно %cost%, у вас %current%)."
   expanded-success: "§aГраница мира расширена на %size% блоков за %cost% алмазов."
-  invalid-argument: "§cНеверный аргумент. Используйте: /eb [размер] или /eb"
+  invalid-argument: "§cНеверный аргумент. Используйте: /eb для списка команд, или /eb [размер]"
   no-permission: "§cУ вас нет разрешения на это действие."
   size-too-large: "§cМаксимальное расширение за раз: %max% блоков."
   cooldown-message: "§cПодождите %seconds% секунд перед повторным использованием."
