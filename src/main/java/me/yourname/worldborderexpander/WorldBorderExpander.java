@@ -417,17 +417,23 @@ public class WorldBorderExpander extends JavaPlugin {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
             config.getString("messages.status-header", "§6§lИнформация о границе мира:")));
         
-        // Текущий уровень игрока
-        int playerLevel = getPlayerLevel(player);
+        // Позиция игрока в таблице лидеров
+        int playerRank = getPlayerRank(player);
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-            config.getString("messages.status-player-level", "§eУровень игрока: §f%level%")
-                .replace("%level%", String.valueOf(playerLevel))));
+            config.getString("messages.status-player-rank", "§eВаша позиция в лидерборде: §f%rank%")
+                .replace("%rank%", String.valueOf(playerRank))));
         
         // Прогресс расширения
         int totalExpansions = playerExpansions.getOrDefault(playerId, 0);
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
             config.getString("messages.status-expansion-progress", "§eПрогресс расширения: §f%total% блоков")
                 .replace("%total%", String.valueOf(totalExpansions))));
+        
+        // Размер барьера
+        double barrierSize = player.getWorld().getWorldBorder().getSize();
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.status-barrier-size", "§eРазмер барьера: §f%.2f блоков")
+                .replace("%.2f", String.format("%.2f", barrierSize))));
         
         // Полученные достижения
         Set<String> unlockedAchievements = playerAchievements.getOrDefault(playerId, new HashSet<>());
@@ -519,5 +525,24 @@ public class WorldBorderExpander extends JavaPlugin {
         // В реальном плагине это будет получение уровня из другого плагина
         // Пока просто возвращаем 1
         return 1;
+    }
+    
+    private int getPlayerRank(Player player) {
+        UUID playerId = player.getUniqueId();
+        int playerExpansions = this.playerExpansions.getOrDefault(playerId, 0);
+        
+        // Сортируем всех игроков по количеству расширений
+        List<Map.Entry<UUID, Integer>> sortedPlayers = new ArrayList<>(this.playerExpansions.entrySet());
+        sortedPlayers.sort(Map.Entry.<UUID, Integer>comparingByValue().reversed());
+        
+        // Находим позицию игрока в списке
+        for (int i = 0; i < sortedPlayers.size(); i++) {
+            if (sortedPlayers.get(i).getKey().equals(playerId)) {
+                return i + 1; // Позиции начинаются с 1
+            }
+        }
+        
+        // Если игрок не найден, возвращаем позицию за пределами списка
+        return sortedPlayers.size() + 1;
     }
 }
