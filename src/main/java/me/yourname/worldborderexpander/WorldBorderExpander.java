@@ -430,15 +430,15 @@ public class WorldBorderExpander extends JavaPlugin {
             config.getString("messages.status-current-diameter", "§eТекущий диаметр: §f%diameter%")
                 .replace("%diameter%", String.format("%.2f", worldBorder.getSize()))));
         
-        // Показываем информацию о текущем расширении, если оно есть
-        long timeRemaining = (long) worldBorder.getTimeRemaining();
-        if (timeRemaining > 0 && timeRemaining < Long.MAX_VALUE) {
+        // Информация о кулдауне для игрока
+        if (hasCooldown((Player) sender)) {
+            int remaining = getCooldownSeconds((Player) sender);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-                config.getString("messages.status-time-remaining", "§eВремя до завершения расширения: §f%time% сек.")
-                    .replace("%time%", String.valueOf(timeRemaining / 1000))));
+                config.getString("messages.status-cooldown", "§eКулдаун: §f%seconds% сек.")
+                    .replace("%seconds%", String.valueOf(remaining))));
         } else {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
-                config.getString("messages.status-no-expansion", "§7Нет активного расширения")));
+                config.getString("messages.status-no-cooldown", "§7Кулдаун не активен")));
         }
     }
     
