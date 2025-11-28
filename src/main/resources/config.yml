@@ -34,7 +34,7 @@ cooldown-seconds: 5
 
 # Сообщения
 messages:
-  need-diamonds: "§cУ вас недостаточно алмазов (нужно %cost%)."
+  need-diamonds: "§cУ вас недостаточно алмазов (нужно %cost%, у вас %current%)."
   expanded-success: "§aГраница мира расширена на %size% блоков за %cost% алмазов."
   invalid-argument: "§cНеверный аргумент. Используйте: /eb [размер] или /eb"
   no-permission: "§cУ вас нет разрешения на это действие."
@@ -48,3 +48,16 @@ messages:
   achievement-format: "§f%achievement% §7- §e%progress%/%required% блоков"
   hidden-achievement-format: "§d%achievement% §7- §e%progress%/%required% блоков"
   hidden-achievement-unlocked: "§6[§eСистема§6] §fВы получили скрытое достижение: §d\"%achievement%\"!"
+  help-header: "§6§lПомощь по командам ExpanderBarrier:"
+  help-expand: "§e/eb [размер] §7- Расширить границу мира (по умолчанию 1 блок)"
+  help-leaderboard: "§e/eb leaderboard §7- Показать таблицу лидеров"
+  help-achievements: "§e/eb achievements §7- Показать ваши достижения"
+  help-status: "§e/eb status §7- Показать текущую информацию о границе мира"
+  help-help: "§e/eb help §7- Показать это сообщение"
+  status-header: "§6§lИнформация о границе мира:"
+  status-current-size: "§eТекущий размер: §f%size%"
+  status-center-x: "§eЦентр X: §f%x%"
+  status-center-z: "§eЦентр Z: §f%z%"
+  status-current-diameter: "§eТекущий диаметр: §f%diameter%"
+  status-time-remaining: "§eВремя до завершения расширения: §f%time% сек."
+  status-no-expansion: "§7Нет активного расширения"

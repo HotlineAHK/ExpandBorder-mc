@@ -143,6 +143,16 @@ public class WorldBorderExpander extends JavaPlugin {
                     showAchievements(sender);
                     return true;
                     
+                case "help":
+                case "помощь":
+                    showHelp(sender);
+                    return true;
+                    
+                case "status":
+                case "статус":
+                    showStatus(sender);
+                    return true;
+                    
                 default:
                     // Пытаемся расширить на указанное количество блоков
                     try {
@@ -212,44 +222,60 @@ public class WorldBorderExpander extends JavaPlugin {
         int cost = size * config.getInt("diamond-cost-per-block", 2);
         ItemStack diamonds = new ItemStack(Material.DIAMOND, cost);
         
-        if (player.getInventory().containsAtLeast(diamonds, cost)) {
-            World world = player.getWorld();
-            player.getInventory().removeItem(diamonds);
-            world.getWorldBorder().setSize(world.getWorldBorder().getSize() + size);
-            
-            // Добавляем к общему количеству расширений игрока
-            UUID playerId = player.getUniqueId();
-            playerExpansions.put(playerId, playerExpansions.getOrDefault(playerId, 0) + size);
-            
-            // Проверяем достижения
-            checkAchievements(player);
-            
-            // Отправляем сообщение игроку
-            String successMessage = config.getString("messages.expanded-success", "§aГраница мира расширена на %size% блоков за %cost% алмазов.");
-            successMessage = successMessage.replace("%size%", String.valueOf(size))
-                                          .replace("%cost%", String.valueOf(cost));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', successMessage));
-            
-            // Оповещение всем игрокам
-            if (config.getBoolean("enable-server-announce", true)) {
-                String announce = config.getString("announce-format", "§c! §f[§6%level%§f] §f%player% §eрасширил барьер на %size% блоков.");
-                announce = announce.replace("%player%", player.getName())
-                                   .replace("%size%", String.valueOf(size))
-                                   .replace("%level%", String.valueOf(getPlayerLevel(player)));
-                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', announce));
+        // Проверяем, достаточно ли алмазов у игрока
+        if (!player.getInventory().containsAtLeast(diamonds, cost)) {
+            // Подсчитываем, сколько алмазов есть у игрока
+            int currentDiamonds = 0;
+            for (ItemStack item : player.getInventory().getContents()) {
+                if (item != null && item.getType() == Material.DIAMOND) {
+                    currentDiamonds += item.getAmount();
+                }
             }
             
-            // Удаляем звук нотного блока (требование 4)
-            // Ранее здесь был код проигрывания звука, теперь он удален
-            
-            // Устанавливаем кулдаун
-            setCooldown(player);
-            
-        } else {
-            String message = config.getString("messages.need-diamonds", "§cУ вас недостаточно алмазов (нужно %cost%).");
-            message = message.replace("%cost%", String.valueOf(cost));
+            String message = config.getString("messages.need-diamonds", "§cУ вас недостаточно алмазов (нужно %cost%, у вас %current%).");
+            message = message.replace("%cost%", String.valueOf(cost))
+                           .replace("%current%", String.valueOf(currentDiamonds));
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+            return true;
         }
+        
+        World world = player.getWorld();
+        player.getInventory().removeItem(diamonds);
+        world.getWorldBorder().setSize(world.getWorldBorder().getSize() + size);
+        
+        // Добавляем к общему количеству расширений игрока
+        UUID playerId = player.getUniqueId();
+        playerExpansions.put(playerId, playerExpansions.getOrDefault(playerId, 0) + size);
+        
+        // Проверяем достижения
+        checkAchievements(player);
+        
+        // Отправляем сообщение игроку
+        String successMessage = config.getString("messages.expanded-success", "§aГраница мира расширена на %size% блоков за %cost% алмазов.");
+        successMessage = successMessage.replace("%size%", String.valueOf(size))
+                                      .replace("%cost%", String.valueOf(cost));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', successMessage));
+        
+        // Отправляем дополнительную информацию о текущем размере границы
+        double newSize = world.getWorldBorder().getSize();
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            "§7Текущий размер границы: §f" + String.format("%.2f", newSize) + " §7блоков"));
+        
+        // Оповещение всем игрокам
+        if (config.getBoolean("enable-server-announce", true)) {
+            String announce = config.getString("announce-format", "§c! §f[§6%level%§f] §f%player% §eрасширил барьер на %size% блоков.");
+            announce = announce.replace("%player%", player.getName())
+                               .replace("%size%", String.valueOf(size))
+                               .replace("%level%", String.valueOf(getPlayerLevel(player)));
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', announce));
+        }
+        
+        // Удаляем звук нотного блока (требование 4)
+        // Ранее здесь был код проигрывания звука, теперь он удален
+        
+        // Устанавливаем кулдаун
+        setCooldown(player);
+        
         return true;
     }
     
@@ -349,6 +375,70 @@ public class WorldBorderExpander extends JavaPlugin {
         
         if (!hasAchievements) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("messages.no-achievements-yet", "§7У вас пока нет достижений.")));
+        }
+    }
+    
+    private void showHelp(CommandSender sender) {
+        if (!sender.hasPermission("expbor.command.help") && !sender.hasPermission("expbor.expand")) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+                config.getString("messages.no-permission", "§cУ вас нет разрешения на это действие.")));
+            return;
+        }
+        
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.help-header", "§6§lПомощь по командам ExpanderBarrier:")));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.help-expand", "§e/eb [размер] §7- Расширить границу мира (по умолчанию 1 блок)")));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.help-leaderboard", "§e/eb leaderboard §7- Показать таблицу лидеров")));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.help-achievements", "§e/eb achievements §7- Показать ваши достижения")));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.help-status", "§e/eb status §7- Показать текущую информацию о границе мира")));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.help-help", "§e/eb help §7- Показать это сообщение")));
+    }
+    
+    private void showStatus(CommandSender sender) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "§cТолько игроки могут использовать эту команду."));
+            return;
+        }
+        
+        if (!sender.hasPermission("expbor.command.status") && !sender.hasPermission("expbor.expand")) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+                config.getString("messages.no-permission", "§cУ вас нет разрешения на это действие.")));
+            return;
+        }
+        
+        Player player = (Player) sender;
+        World world = player.getWorld();
+        org.bukkit.WorldBorder worldBorder = world.getWorldBorder();
+        
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.status-header", "§6§lИнформация о границе мира:")));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.status-current-size", "§eТекущий размер: §f%size%")
+                .replace("%size%", String.format("%.2f", worldBorder.getSize()))));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.status-center-x", "§eЦентр X: §f%x%")
+                .replace("%x%", String.format("%.2f", worldBorder.getCenter().getX()))));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.status-center-z", "§eЦентр Z: §f%z%")
+                .replace("%z%", String.format("%.2f", worldBorder.getCenter().getZ()))));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+            config.getString("messages.status-current-diameter", "§eТекущий диаметр: §f%diameter%")
+                .replace("%diameter%", String.format("%.2f", worldBorder.getSize()))));
+        
+        // Показываем информацию о текущем расширении, если оно есть
+        long timeRemaining = (long) worldBorder.getTimeRemaining();
+        if (timeRemaining > 0 && timeRemaining < Long.MAX_VALUE) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+                config.getString("messages.status-time-remaining", "§eВремя до завершения расширения: §f%time% сек.")
+                    .replace("%time%", String.valueOf(timeRemaining / 1000))));
+        } else {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', 
+                config.getString("messages.status-no-expansion", "§7Нет активного расширения")));
         }
     }
     
