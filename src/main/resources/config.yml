@@ -61,3 +61,7 @@ messages:
   status-current-diameter: "§eТекущий диаметр: §f%diameter%"
   status-time-remaining: "§eВремя до завершения расширения: §f%time% сек."
   status-no-expansion: "§7Нет активного расширения"
+  status-player-level: "§eУровень игрока: §f%level%"
+  status-expansion-progress: "§eПрогресс расширения: §f%total% блоков"
+  status-achievements: "§eДостижения: §f%achievements%"
+  status-no-achievements: "§eДостижения: §fПока нет"
