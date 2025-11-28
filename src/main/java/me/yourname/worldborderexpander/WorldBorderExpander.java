@@ -170,6 +170,56 @@ public class WorldBorderExpander extends JavaPlugin {
         return false;
     }
     
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        String cmdLabel = alias.toLowerCase();
+        
+        if (isExpanderCommand(cmdLabel)) {
+            if (args.length == 1) {
+                // Предлагаем подкоманды при вводе первой части аргумента
+                String arg = args[0].toLowerCase();
+                
+                List<String> completions = new ArrayList<>();
+                
+                // Добавляем все возможные подкоманды
+                completions.add("leaderboard");
+                completions.add("top");
+                completions.add("achievements");
+                completions.add("achs");
+                completions.add("ach");
+                completions.add("help");
+                completions.add("помощь");
+                completions.add("status");
+                completions.add("статус");
+                
+                // Возвращаем только те подкоманды, которые начинаются с введенного аргумента
+                List<String> result = new ArrayList<>();
+                for (String completion : completions) {
+                    if (completion.startsWith(arg)) {
+                        result.add(completion);
+                    }
+                }
+                
+                return result;
+            } else if (args.length == 0) {
+                // При вводе команды без аргументов показываем все подкоманды
+                List<String> completions = new ArrayList<>();
+                completions.add("leaderboard");
+                completions.add("top");
+                completions.add("achievements");
+                completions.add("achs");
+                completions.add("ach");
+                completions.add("help");
+                completions.add("помощь");
+                completions.add("status");
+                completions.add("статус");
+                return completions;
+            }
+        }
+        
+        return null;
+    }
+    
     private boolean isExpanderCommand(String label) {
         return label.equals("eb") || 
                label.equals("expbor") || 
